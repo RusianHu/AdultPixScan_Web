@@ -1,4 +1,4 @@
-# AdultPixScan - 图片内容安全检测工具
+![9E4033D8CC876DF8EC0CFE1BE0470447](https://github.com/user-attachments/assets/0876c5ed-f61b-44a8-986a-f5596f123052)# AdultPixScan - 图片内容安全检测工具
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/RusianHu/AdultPixScan_Web.svg?style=social)](https://github.com/RusianHu/AdultPixScan_Web/stargazers)
@@ -16,7 +16,7 @@
 [![OpenRouter](https://img.shields.io/badge/OpenRouter-API-00BFFF.svg)](https://openrouter.ai/)
 [![Gemini](https://img.shields.io/badge/Google_Gemini-2.5-4285F4.svg?logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
 
-AdultPixScan 是一个基于 AI 的图片内容安全检测工具，可以帮助用户快速识别图片中可能存在的不适宜内容。该工具使用 OpenRouter API 接入先进的 AI 模型，提供高精度的内容安全分析。
+AdultPixScan 是一个基于 AI 的图片内容安全检测工具，可以帮助用户快速识别图片中可能存在的不适宜内容（涩图）。该工具使用 OpenRouter API 接入先进的 AI 模型，提供高精度的内容安全分析。
 
 ![image](https://github.com/user-attachments/assets/d7482fe4-9106-4e40-bf2b-43fe1c343c59)
 

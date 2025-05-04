@@ -18,6 +18,12 @@
 
 AdultPixScan 是一个基于 AI 的图片内容安全检测工具，可以帮助用户快速识别图片中可能存在的不适宜内容。该工具使用 OpenRouter API 接入先进的 AI 模型，提供高精度的内容安全分析。
 
+![image](https://github.com/user-attachments/assets/d7482fe4-9106-4e40-bf2b-43fe1c343c59)
+
+
+![image](https://github.com/user-attachments/assets/08078eac-820a-489d-a29f-09f2345ece96)
+
+
 ## 功能特点
 
 - 🖼️ 简单易用的图片上传界面

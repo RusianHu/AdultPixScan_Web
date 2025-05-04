@@ -30,6 +30,10 @@ $forceIPv4 = isset($config['force_ipv4']) ? filter_var($config['force_ipv4'], FI
 $timeout = (int)($config['timeout'] ?? 180);
 $connectTimeout = (int)($config['connect_timeout'] ?? 30);
 
+// 读取图片备份配置（如果存在）
+$enableImageBackup = isset($config['enable_image_backup']) ? filter_var($config['enable_image_backup'], FILTER_VALIDATE_BOOLEAN) : false;
+$imageBackupDir = $config['image_backup_dir'] ?? 'image_backups';
+
 // 设置 PHP 超时时间 (比 cURL 超时稍长)
 set_time_limit(300); // 300 秒，增加超时时间
 ini_set('default_socket_timeout', 180); // 设置 socket 超时时间
@@ -106,6 +110,41 @@ try {
         throw new Exception('无法读取上传的图片文件。');
     }
     $imageBase64 = base64_encode($imageData);
+
+    // --- 如果启用了图片备份功能，保存图片到备份目录 ---
+    if ($enableImageBackup) {
+        // 创建备份目录（如果不存在）
+        if (!file_exists($imageBackupDir) && !is_dir($imageBackupDir)) {
+            if (!mkdir($imageBackupDir, 0755, true)) {
+                // 记录错误但不中断主流程
+                file_put_contents('backup_error.log', date('Y-m-d H:i:s') . " - 无法创建备份目录: {$imageBackupDir}\n", FILE_APPEND);
+            }
+        }
+
+        // 确保目录存在且可写
+        if (is_dir($imageBackupDir) && is_writable($imageBackupDir)) {
+            // 生成带有时间戳的唯一文件名
+            $originalName = pathinfo($uploadedFile['name'], PATHINFO_FILENAME);
+            $extension = pathinfo($uploadedFile['name'], PATHINFO_EXTENSION);
+            // 格式化文件名：原文件名_年月日_时分秒_随机数.扩展名
+            $timestamp = date('Ymd_His');
+            $randomStr = substr(md5(uniqid(mt_rand(), true)), 0, 6);
+            $backupFileName = "{$originalName}_{$timestamp}_{$randomStr}.{$extension}";
+            $backupFilePath = "{$imageBackupDir}/{$backupFileName}";
+
+            // 保存图片到备份目录
+            if (!file_put_contents($backupFilePath, $imageData)) {
+                // 记录错误但不中断主流程
+                file_put_contents('backup_error.log', date('Y-m-d H:i:s') . " - 无法保存图片到备份目录: {$backupFilePath}\n", FILE_APPEND);
+            } else {
+                // 记录成功备份的信息
+                file_put_contents('backup_success.log', date('Y-m-d H:i:s') . " - 成功备份图片: {$backupFilePath}\n", FILE_APPEND);
+            }
+        } else {
+            // 记录错误但不中断主流程
+            file_put_contents('backup_error.log', date('Y-m-d H:i:s') . " - 备份目录不存在或不可写: {$imageBackupDir}\n", FILE_APPEND);
+        }
+    }
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['error' => '处理图片时出错: ' . $e->getMessage()]);

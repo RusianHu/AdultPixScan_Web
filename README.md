@@ -1,6 +1,13 @@
 # AdultPixScan - 图片内容安全检测工具
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/RusianHu/AdultPixScan_Web.svg?style=social)](https://github.com/RusianHu/AdultPixScan_Web/stargazers)
+[![Forks](https://img.shields.io/github/forks/RusianHu/AdultPixScan_Web.svg?style=social)](https://github.com/RusianHu/AdultPixScan_Web/network/members)
+[![Issues](https://img.shields.io/github/issues/RusianHu/AdultPixScan_Web.svg)](https://github.com/RusianHu/AdultPixScan_Web/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/RusianHu/AdultPixScan_Web.svg)](https://github.com/RusianHu/AdultPixScan_Web/commits/main)
+[![Repo Size](https://img.shields.io/github/repo-size/RusianHu/AdultPixScan_Web.svg)](https://github.com/RusianHu/AdultPixScan_Web)
+[![Visitors](https://visitor-badge.laobi.icu/badge?page_id=RusianHu.AdultPixScan_Web)](https://github.com/RusianHu/AdultPixScan_Web)
+
 [![PHP](https://img.shields.io/badge/PHP-7.4+-777BB4.svg?logo=php&logoColor=white)](https://php.net/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26.svg?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6.svg?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)

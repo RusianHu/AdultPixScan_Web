@@ -1,0 +1,326 @@
+/* 全局样式 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f4f5f7;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* 改为 flex-start 以便内容多时可以滚动 */
+    min-height: 100vh; /* 保证至少占满屏幕高度 */
+    padding-top: 20px; /* 顶部留白 */
+    padding-bottom: 20px; /* 底部留白 */
+}
+
+.container {
+    background-color: #fff;
+    padding: 25px 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 700px; /* 限制最大宽度 */
+    box-sizing: border-box; /* 防止 padding 撑大容器 */
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+header h1 {
+    color: #2a6fdb; /* 蓝色调 */
+    margin-bottom: 5px;
+    font-size: 2.2em; /* 增大标题 */
+}
+
+header p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+h2 {
+    color: #444;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.6em;
+    border-left: 4px solid #2a6fdb; /* 标题左侧装饰线 */
+    padding-left: 10px;
+}
+
+h3 {
+    color: #555;
+    margin-bottom: 8px;
+    font-size: 1.2em;
+}
+
+/* 上传区域 */
+.upload-section {
+    background-color: #f9f9f9;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    transition: border-color 0.3s ease;
+}
+.upload-section:hover {
+    border-color: #2a6fdb;
+}
+
+.upload-button {
+    background-color: #2a6fdb;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* 使 label 表现像按钮 */
+    margin-bottom: 10px;
+}
+
+.upload-button:hover {
+    background-color: #1e5aa7;
+}
+
+input[type="file"] {
+    display: none; /* 隐藏原生上传按钮 */
+}
+
+#fileName {
+    display: block;
+    margin-top: 10px;
+    color: #555;
+    font-style: italic;
+}
+
+/* 预览区域 */
+.preview-section {
+    margin-bottom: 25px;
+}
+
+#imagePreviewContainer {
+    width: 100%;
+    min-height: 150px; /* 最小高度 */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* 防止图片溢出 */
+    background-color: #fdfdfd;
+    position: relative; /* 用于定位占位符 */
+}
+
+#imagePreview {
+    max-width: 100%;
+    max-height: 400px; /* 限制预览图最大高度 */
+    display: block;
+    border-radius: 8px; /* 预览图也加圆角 */
+}
+
+#previewPlaceholder {
+    color: #aaa;
+    font-size: 1em;
+    position: absolute; /* 绝对定位 */
+    text-align: center;
+}
+
+/* 分析按钮 */
+.scan-button-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#scanButton {
+    background-color: #28a745; /* 绿色 */
+    color: white;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.3em;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
+}
+
+#scanButton:hover:not(:disabled) {
+    background-color: #218838;
+}
+
+#scanButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* 结果区域 */
+.results-section {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px; /* 与上方按钮间距 */
+}
+
+.result-item {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #ddd;
+}
+.result-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.probability-indicator {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.probability-indicator .bar {
+    height: 25px;
+    width: 80%; /* 调整宽度 */
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden; /* 隐藏内部进度条溢出 */
+    margin-right: 15px; /* 与文字间距 */
+    border: 1px solid #ccc; /* 添加边框 */
+}
+
+#probabilityBar {
+    height: 100%;
+    width: 0%; /* 初始为0 */
+    background-color: #28a745; /* 默认绿色 */
+    border-radius: 5px 0 0 5px; /* 左侧圆角 */
+    transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
+    text-align: right;
+    color: white;
+    font-weight: bold;
+    line-height: 25px; /* 垂直居中 */
+    padding-right: 5px; /* 内部文字留白 */
+    box-sizing: border-box; /* 防止 padding 撑大 */
+}
+
+#probabilityText {
+    font-size: 1.2em;
+    font-weight: bold;
+    min-width: 50px; /* 确保有足够空间显示百分比 */
+    text-align: right;
+}
+
+#reasoningText, #isAdultText {
+    color: #555;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    min-height: 30px; /* 最小高度 */
+    word-wrap: break-word; /* 长单词换行 */
+}
+
+/* 加载指示器 */
+#loadingIndicator {
+    text-align: center;
+    padding: 20px;
+    color: #555;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #2a6fdb;
+    animation: spin 1s ease infinite;
+    margin: 0 auto 10px auto; /* 居中并与文字间距 */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 错误消息 */
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 页脚 */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    color: #888;
+    font-size: 0.9em;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
+    header h1 {
+        font-size: 1.8em;
+    }
+    header p {
+        font-size: 1em;
+    }
+    h2 {
+        font-size: 1.4em;
+    }
+    .upload-button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    #scanButton {
+        padding: 12px 30px;
+        font-size: 1.1em;
+    }
+    .probability-indicator {
+        flex-direction: column; /* 垂直排列 */
+        align-items: flex-start;
+    }
+    .probability-indicator .bar {
+        width: 100%; /* 占满宽度 */
+        margin-right: 0;
+        margin-bottom: 8px; /* 与文字间距 */
+    }
+    #probabilityText {
+        text-align: left; /* 左对齐 */
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .container {
+        padding: 15px;
+    }
+    header h1 {
+        font-size: 1.6em;
+    }
+    h2 {
+        font-size: 1.3em;
+    }
+    .upload-section {
+        padding: 15px;
+    }
+}

@@ -1,7 +1,7 @@
 /* 全局样式 */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f4f5f7;
+    background-color: #ffe6f2; /* 粉色背景 */
     color: #333;
     line-height: 1.6;
     margin: 0;
@@ -18,10 +18,11 @@ body {
     background-color: #fff;
     padding: 25px 40px;
     border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(255, 153, 204, 0.3); /* 粉色阴影 */
     width: 90%;
     max-width: 700px; /* 限制最大宽度 */
     box-sizing: border-box; /* 防止 padding 撑大容器 */
+    border: 1px solid #ffcce6; /* 粉色边框 */
 }
 
 header {
@@ -72,7 +73,7 @@ h3 {
 }
 
 .upload-button {
-    background-color: #2a6fdb;
+    background-color: #ff66b2; /* 粉色按钮 */
     color: white;
     padding: 12px 25px;
     border: none;
@@ -85,7 +86,7 @@ h3 {
 }
 
 .upload-button:hover {
-    background-color: #1e5aa7;
+    background-color: #ff3399; /* 深粉色 */
 }
 
 input[type="file"] {
@@ -138,7 +139,7 @@ input[type="file"] {
 }
 
 #scanButton {
-    background-color: #28a745; /* 绿色 */
+    background-color: #ff4da6; /* 粉色 */
     color: white;
     padding: 15px 40px;
     border: none;
@@ -150,19 +151,19 @@ input[type="file"] {
 }
 
 #scanButton:hover:not(:disabled) {
-    background-color: #218838;
+    background-color: #ff1a8c; /* 深粉色 */
 }
 
 #scanButton:disabled {
-    background-color: #ccc;
+    background-color: #ffb3d9; /* 浅粉色 */
     cursor: not-allowed;
     opacity: 0.7;
 }
 
 /* 结果区域 */
 .results-section {
-    background-color: #f9f9f9;
-    border: 1px solid #eee;
+    background-color: #fff5fa; /* 浅粉色背景 */
+    border: 1px solid #ffcce6; /* 粉色边框 */
     border-radius: 8px;
     padding: 20px;
     margin-top: 20px; /* 与上方按钮间距 */
@@ -171,7 +172,7 @@ input[type="file"] {
 .result-item {
     margin-bottom: 20px;
     padding-bottom: 15px;
-    border-bottom: 1px dashed #ddd;
+    border-bottom: 1px dashed #ffb3d9; /* 粉色虚线 */
 }
 .result-item:last-child {
     border-bottom: none;
@@ -182,63 +183,47 @@ input[type="file"] {
 .probability-indicator {
     display: flex;
     align-items: center;
-    margin-top: 5px;
+    margin-top: 15px;
 }
 
-.probability-indicator .bar {
-    height: 25px;
-    width: 80%; /* 调整宽度 */
-    background-color: #e9ecef;
-    border-radius: 5px;
-    overflow: hidden; /* 隐藏内部进度条溢出 */
-    margin-right: 15px; /* 与文字间距 */
-    border: 1px solid #ccc; /* 添加边框 */
-}
-
-#probabilityBar {
-    height: 100%;
-    width: 0%; /* 初始为0 */
-    background-color: #28a745; /* 默认绿色 */
-    border-radius: 5px 0 0 5px; /* 左侧圆角 */
-    transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
-    text-align: right;
-    color: white;
-    font-weight: bold;
-    line-height: 25px; /* 垂直居中 */
-    padding-right: 5px; /* 内部文字留白 */
-    box-sizing: border-box; /* 防止 padding 撑大 */
-}
-
+/* 移除进度条，改用颜色块显示风险概率 */
 #probabilityText {
-    font-size: 1.2em;
+    font-size: 2em;
     font-weight: bold;
-    min-width: 50px; /* 确保有足够空间显示百分比 */
-    text-align: right;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+    width: 120px;
+    margin: 0 auto;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.5s ease-in-out;
 }
 
 #reasoningText, #isAdultText {
     color: #555;
     background-color: #fff;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ffcce6; /* 粉色边框 */
     min-height: 30px; /* 最小高度 */
     word-wrap: break-word; /* 长单词换行 */
+    box-shadow: 0 2px 4px rgba(255, 153, 204, 0.1); /* 粉色阴影 */
 }
 
 /* 加载指示器 */
 #loadingIndicator {
     text-align: center;
     padding: 20px;
-    color: #555;
+    color: #ff66b2; /* 粉色文字 */
 }
 
 .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
+    border: 4px solid rgba(255, 204, 230, 0.3); /* 浅粉色边框 */
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    border-left-color: #2a6fdb;
+    border-left-color: #ff66b2; /* 粉色加载指示器 */
     animation: spin 1s ease infinite;
     margin: 0 auto 10px auto; /* 居中并与文字间距 */
 }
@@ -250,9 +235,9 @@ input[type="file"] {
 
 /* 错误消息 */
 .error-message {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+    background-color: #ffe6f0; /* 浅粉色背景 */
+    color: #cc0066; /* 深粉色文字 */
+    border: 1px solid #ff99cc; /* 粉色边框 */
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -264,9 +249,22 @@ footer {
     text-align: center;
     margin-top: 40px;
     padding-top: 20px;
-    border-top: 1px solid #eee;
-    color: #888;
+    border-top: 1px solid #ffcce6; /* 粉色边框 */
+    color: #ff66b2; /* 粉色文字 */
     font-size: 0.9em;
+}
+
+/* 标题样式 */
+header h1 {
+    color: #ff1a8c; /* 深粉色标题 */
+}
+
+header p {
+    color: #ff66b2; /* 粉色副标题 */
+}
+
+h2, h3 {
+    color: #ff4da6; /* 粉色小标题 */
 }
 
 /* 响应式设计 */

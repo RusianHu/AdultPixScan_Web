@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingIndicator = document.getElementById('loadingIndicator');
     const errorDisplay = document.getElementById('errorDisplay');
     const resultContent = document.getElementById('resultContent');
-    const probabilityBar = document.getElementById('probabilityBar');
     const probabilityText = document.getElementById('probabilityText');
     const reasoningText = document.getElementById('reasoningText');
     const isAdultText = document.getElementById('isAdultText');
@@ -128,19 +127,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const probability = parseFloat(result.probability) * 100; // 转为百分比
         probabilityText.textContent = `${probability.toFixed(1)}%`;
 
-        // 更新进度条宽度和颜色
-        probabilityBar.style.width = `${probability}%`;
+        // 根据风险概率设置不同的颜色
         if (probability < 30) {
-            probabilityBar.style.backgroundColor = '#28a745'; // Green
+            probabilityText.style.backgroundColor = '#4CAF50'; // 绿色 - 安全
+        } else if (probability < 50) {
+            probabilityText.style.backgroundColor = '#8BC34A'; // 浅绿色 - 较安全
         } else if (probability < 70) {
-            probabilityBar.style.backgroundColor = '#ffc107'; // Orange
-            probabilityBar.style.color = '#333'; // 橙色背景用深色文字
+            probabilityText.style.backgroundColor = '#FFC107'; // 黄色 - 警告
+        } else if (probability < 85) {
+            probabilityText.style.backgroundColor = '#FF9800'; // 橙色 - 高风险
         } else {
-            probabilityBar.style.backgroundColor = '#dc3545'; // Red
-            probabilityBar.style.color = 'white'; // 红色背景用白色文字
+            probabilityText.style.backgroundColor = '#F44336'; // 红色 - 非常高风险
         }
-        // 显示进度条内的百分比文字（可选）
-        // probabilityBar.textContent = `${probability.toFixed(1)}%`;
 
         reasoningText.textContent = result.reasoning || 'AI 未提供具体原因。';
         isAdultText.textContent = result.is_adult_content ? '是' : '否';
@@ -160,8 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingIndicator.style.display = 'none';
         errorDisplay.style.display = 'none';
         resultContent.style.display = 'none';
-        probabilityBar.style.width = '0%';
         probabilityText.textContent = '--%';
+        probabilityText.style.backgroundColor = ''; // 重置背景颜色
         reasoningText.textContent = '--';
         isAdultText.textContent = '--';
     }

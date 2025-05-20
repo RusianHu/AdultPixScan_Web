@@ -63,13 +63,45 @@ h3 {
     background-color: #f9f9f9;
     border: 2px dashed #ccc;
     border-radius: 8px;
-    padding: 20px;
+    padding: 30px;
     text-align: center;
     margin-bottom: 25px;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .upload-section:hover {
-    border-color: #2a6fdb;
+    border-color: #ff66b2;
+    background-color: #fff5fa;
+}
+
+.upload-section.drag-over {
+    border-color: #ff3399;
+    background-color: #fff0f7;
+    box-shadow: 0 0 10px rgba(255, 102, 178, 0.3);
+    transform: scale(1.01);
+}
+
+.upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.upload-icon {
+    margin-bottom: 15px;
+    color: #ff66b2;
+}
+
+.upload-text {
+    margin-bottom: 15px;
+    color: #666;
+    font-size: 1.1em;
 }
 
 .upload-button {
@@ -302,6 +334,18 @@ h2, h3 {
     #probabilityText {
         text-align: left; /* 左对齐 */
     }
+    .upload-section {
+        min-height: 150px;
+        padding: 20px;
+    }
+    .upload-icon svg {
+        width: 36px;
+        height: 36px;
+    }
+    .upload-text {
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -320,5 +364,14 @@ h2, h3 {
     }
     .upload-section {
         padding: 15px;
+        min-height: 120px;
+    }
+    .upload-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+    .upload-text {
+        font-size: 0.9em;
+        margin-bottom: 8px;
     }
 }

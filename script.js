@@ -12,12 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const probabilityText = document.getElementById('probabilityText');
     const reasoningText = document.getElementById('reasoningText');
     const isAdultText = document.getElementById('isAdultText');
+    const dropZone = document.getElementById('dropZone');
 
     let selectedFile = null;
 
-    // 文件选择处理
-    imageUpload.addEventListener('change', (event) => {
-        selectedFile = event.target.files[0];
+    // 处理文件函数 - 抽取为单独函数以便复用
+    function handleFile(file) {
+        selectedFile = file;
         if (selectedFile) {
             // 检查文件类型 (基本检查)
             const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
@@ -57,7 +58,53 @@ document.addEventListener('DOMContentLoaded', () => {
             resetPreview();
             scanButton.disabled = true;
         }
+    }
+
+    // 文件选择处理
+    imageUpload.addEventListener('change', (event) => {
+        handleFile(event.target.files[0]);
     });
+
+    // 拖拽上传功能
+    // 阻止默认行为，允许拖放
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    // 添加视觉反馈
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight() {
+        dropZone.classList.add('drag-over');
+    }
+
+    function unhighlight() {
+        dropZone.classList.remove('drag-over');
+    }
+
+    // 处理拖放的文件
+    dropZone.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const file = dt.files[0]; // 只处理第一个文件
+        if (file && file.type.startsWith('image/')) {
+            handleFile(file);
+        } else {
+            showError('请拖放图片文件。');
+        }
+    }
 
     // 点击分析按钮
     scanButton.addEventListener('click', () => {

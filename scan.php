@@ -86,12 +86,45 @@ $uploadedFile = $_FILES['image'];
 $imagePath = $uploadedFile['tmp_name'];
 $imageMimeType = $uploadedFile['type']; // 获取 MIME 类型
 
-// --- 基本 MIME 类型验证 (不依赖 fileinfo) ---
+//类型验证
 $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 if (!in_array($imageMimeType, $allowedMimeTypes)) {
     http_response_code(400);
     echo json_encode(['error' => '无效的图片格式。仅支持 JPEG, PNG, WEBP, GIF。']);
     // 注意：上传后临时文件会被自动删除，无需手动 unlink
+    exit;
+}
+
+//检查文件头
+$fileSignatures = [
+    'image/jpeg' => ["\xFF\xD8\xFF"],
+    'image/png'  => ["\x89\x50\x4E\x47\x0D\x0A\x1A\x0A"],
+    'image/gif'  => ["GIF87a", "GIF89a"],
+    'image/webp' => ["RIFF", "\x52\x49\x46\x46"]
+];
+
+// 读取文件头部
+$fileContent = file_get_contents($imagePath, false, null, 0, 12);
+if ($fileContent === false) {
+    http_response_code(400);
+    echo json_encode(['error' => '无法读取上传的文件内容。']);
+    exit;
+}
+
+// 验证文件头
+$validSignature = false;
+if (isset($fileSignatures[$imageMimeType])) {
+    foreach ($fileSignatures[$imageMimeType] as $signature) {
+        if (strncmp($fileContent, $signature, strlen($signature)) === 0) {
+            $validSignature = true;
+            break;
+        }
+    }
+}
+
+if (!$validSignature) {
+    http_response_code(400);
+    echo json_encode(['error' => '文件内容与声明的图片类型不匹配。伪装的文件？？？？']);
     exit;
 }
 
@@ -125,11 +158,28 @@ try {
         if (is_dir($imageBackupDir) && is_writable($imageBackupDir)) {
             // 生成带有时间戳的唯一文件名
             $originalName = pathinfo($uploadedFile['name'], PATHINFO_FILENAME);
-            $extension = pathinfo($uploadedFile['name'], PATHINFO_EXTENSION);
-            // 格式化文件名：原文件名_年月日_时分秒_随机数.扩展名
+            // 强制使用安全的扩展名，不使用上传文件的原始扩展名
+            $safeExtension = '';
+            switch ($imageMimeType) {
+                case 'image/jpeg':
+                    $safeExtension = 'jpg';
+                    break;
+                case 'image/png':
+                    $safeExtension = 'png';
+                    break;
+                case 'image/webp':
+                    $safeExtension = 'webp';
+                    break;
+                case 'image/gif':
+                    $safeExtension = 'gif';
+                    break;
+                default:
+                    $safeExtension = 'bin'; // 未知类型使用安全的二进制扩展名
+            }
+            // 格式化文件名：原文件名_年月日_时分秒_随机数.安全扩展名
             $timestamp = date('Ymd_His');
             $randomStr = substr(md5(uniqid(mt_rand(), true)), 0, 6);
-            $backupFileName = "{$originalName}_{$timestamp}_{$randomStr}.{$extension}";
+            $backupFileName = "{$originalName}_{$timestamp}_{$randomStr}.{$safeExtension}";
             $backupFilePath = "{$imageBackupDir}/{$backupFileName}";
 
             // 保存图片到备份目录
